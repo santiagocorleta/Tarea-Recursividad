@@ -1,4 +1,3 @@
-# Usamos list en lugar de deque
 cola_notificaciones = [
     {"hora": "11:45", "app": "Facebook", "mensaje": "¡Revisa tus recuerdos!"},
     {"hora": "12:10", "app": "Twitter", "mensaje": "Python es increíble"},
@@ -9,7 +8,6 @@ cola_notificaciones = [
     {"hora": "15:00", "app": "Twitter", "mensaje": "Hoy se celebra el día de Python"},
 ]
 
-# a. Eliminar notificaciones de Facebook
 def eliminar_facebook(cola):
     tamaño = len(cola)
     for _ in range(tamaño):
@@ -17,7 +15,6 @@ def eliminar_facebook(cola):
         if noti["app"] != "Facebook":
             cola.append(noti)
 
-# b. Mostrar notificaciones de Twitter con 'Python', sin perder datos
 def mostrar_twitter_python(cola):
     print("\n--- Notificaciones de Twitter con 'Python' ---")
     tamaño = len(cola)
@@ -27,7 +24,6 @@ def mostrar_twitter_python(cola):
             print(f"[{noti['hora']}] {noti['mensaje']}")
         cola.append(noti)
 
-# c. Guardar en pila notificaciones entre 11:43 y 15:57
 def notificaciones_en_horario(cola, hora_inicio, hora_fin):
     def hora_a_minutos(hora_str):
         h, m = map(int, hora_str.split(":"))
@@ -50,7 +46,6 @@ def notificaciones_en_horario(cola, hora_inicio, hora_fin):
     for noti in pila_temporal:
         print(f"[{noti['hora']}] {noti['app']}: {noti['mensaje']}")
 
-# Ejecución
 print("\n=== Eliminando notificaciones de Facebook ===")
 eliminar_facebook(cola_notificaciones)
 
