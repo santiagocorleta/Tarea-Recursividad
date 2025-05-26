@@ -1,0 +1,61 @@
+# Usamos list en lugar de deque
+cola_notificaciones = [
+    {"hora": "11:45", "app": "Facebook", "mensaje": "¡Revisa tus recuerdos!"},
+    {"hora": "12:10", "app": "Twitter", "mensaje": "Python es increíble"},
+    {"hora": "14:00", "app": "Instagram", "mensaje": "Nueva historia de tu amigo"},
+    {"hora": "16:30", "app": "Facebook", "mensaje": "Nuevo evento cercano"},
+    {"hora": "13:45", "app": "Twitter", "mensaje": "Aprendé Python con este curso"},
+    {"hora": "11:50", "app": "WhatsApp", "mensaje": "Nuevo mensaje de Juan"},
+    {"hora": "15:00", "app": "Twitter", "mensaje": "Hoy se celebra el día de Python"},
+]
+
+# a. Eliminar notificaciones de Facebook
+def eliminar_facebook(cola):
+    tamaño = len(cola)
+    for _ in range(tamaño):
+        noti = cola.pop(0)  # en lugar de popleft()
+        if noti["app"] != "Facebook":
+            cola.append(noti)
+
+# b. Mostrar notificaciones de Twitter con 'Python', sin perder datos
+def mostrar_twitter_python(cola):
+    print("\n--- Notificaciones de Twitter con 'Python' ---")
+    tamaño = len(cola)
+    for _ in range(tamaño):
+        noti = cola.pop(0)
+        if noti["app"] == "Twitter" and "Python" in noti["mensaje"]:
+            print(f"[{noti['hora']}] {noti['mensaje']}")
+        cola.append(noti)
+
+# c. Guardar en pila notificaciones entre 11:43 y 15:57
+def notificaciones_en_horario(cola, hora_inicio, hora_fin):
+    def hora_a_minutos(hora_str):
+        h, m = map(int, hora_str.split(":"))
+        return h * 60 + m
+
+    inicio = hora_a_minutos(hora_inicio)
+    fin = hora_a_minutos(hora_fin)
+
+    pila_temporal = []
+    tamaño = len(cola)
+    for _ in range(tamaño):
+        noti = cola.pop(0)
+        hora_noti = hora_a_minutos(noti["hora"])
+        if inicio <= hora_noti <= fin:
+            pila_temporal.append(noti)
+        cola.append(noti)
+
+    print(f"\n--- Notificaciones entre {hora_inicio} y {hora_fin} ---")
+    print(f"Cantidad: {len(pila_temporal)}")
+    for noti in pila_temporal:
+        print(f"[{noti['hora']}] {noti['app']}: {noti['mensaje']}")
+
+# Ejecución
+print("\n=== Eliminando notificaciones de Facebook ===")
+eliminar_facebook(cola_notificaciones)
+
+print("\n=== Mostrando notificaciones de Twitter con 'Python' ===")
+mostrar_twitter_python(cola_notificaciones)
+
+print("\n=== Notificaciones en horario específico ===")
+notificaciones_en_horario(cola_notificaciones, "11:43", "15:57")
